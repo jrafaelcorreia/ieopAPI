@@ -1,13 +1,66 @@
-const express = require('express'); //Import the express dependency
-const app = express();              //Instantiate an express app, the main work horse of this server
-const port = 5000;                  //Save the port number where your server will be listening
+const express = require("express");
+const request = require('request'); 
+const parser = require("xml2js");
 
-//Idiomatic expression in express to route and respond to a client request
-app.get('/', (req, res) => {        //get requests to the root ("/") will route here
-    res.sendFile('index.html', {root: __dirname});      //server responds by sending the index.html file to the client's browser
-                                                        //the .sendFile method needs the absolute path to the file, see: https://expressjs.com/en/4x/api.html#res.sendFile 
-});
+const app = express();
 
-app.listen(port, () => {            //server starts listening for any attempts from a client to connect at port: {port}
-    console.log(`Now listening on port ${port}`); 
-});
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+
+const PORT = 5000;
+
+
+/**
+ * 
+ * PARAMS:
+ *      nenhum
+ * Result:
+ *      status - booleano que indica o estado de sucesso ou insucesso
+ * 
+ */
+app.get("/", function(req, res) {
+    res.status(200).json({
+        status: true,
+        message: "Iniciei"
+    });
+})
+
+app.post("/teste", function(requesto, resposta) {
+    console.log("###########teste####################\n");
+    if(typeof requesto.body.nif === "undefined") {
+        resposta.status(200).json({
+            status: false,
+            message: "teste"
+        });
+        return;
+    }
+
+    var nif = requesto.body.nif;
+
+    //Pedir um acces token   
+    request({
+      url: 'https://identity.primaverabss.com/core/connect/token',
+      method: 'POST',
+      auth: {
+        user: 'IEOP2022IPVC', // TODO : put your application client id here
+        pass: '36938944-74b2-41ee-8855-146244025132' // TODO : put your application client secret here
+      },
+      form: { 
+        'grant_type': 'client_credentials',
+        'scope': 'application',
+      }
+    }, function(err, res) {
+      if (res) {
+
+        var json = JSON.parse(res.body);
+        var access_token = json.access_token;
+   
+        var url = `https://my.jasminsoftware.com/api/289715/289715-0001/cliente/'${nif}'`;
+
+        request({
+            url: url,
+            method: "GET",
+
+
+    });
