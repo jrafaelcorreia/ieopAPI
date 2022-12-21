@@ -16,6 +16,7 @@ exports.get = async (req, res) => {
         return res.send(customers.data);
     }
     catch (e) {
+        res.send(e);
 
 
     }

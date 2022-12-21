@@ -7,7 +7,7 @@
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
-  "author": "João Correia",
+  "author": "Joao Correia",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.1.3",

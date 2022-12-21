@@ -3,8 +3,10 @@ const axios = require("axios");
 
 exports.get = async (req, res) => {
     try {
+        
         const token =  await this.connect1();
         const url = "https://my.jasminsoftware.com/api/292267/292267-0001/salesCore/salesItems";
+
 
         const config = {
             headers: {
@@ -13,6 +15,7 @@ exports.get = async (req, res) => {
         };
 
         const customers = await axios.get(url, config);
+
         return res.send(customers.data);
     }
     catch (e) {
