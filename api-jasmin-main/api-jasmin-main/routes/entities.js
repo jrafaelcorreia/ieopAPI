@@ -10,6 +10,8 @@ entitiesRouter.post('/createClient', costomers.create);
 entitiesRouter.get('/products', products.get);
 entitiesRouter.get('/products/:id', products.getById);
 entitiesRouter.post('/createProduct', products.create);
+entitiesRouter.post('/stock', products.stock);
+entitiesRouter.get('/products/stock/:id', products.getStock);
 
 entitiesRouter.get('/orders', orders.get);
 entitiesRouter.get('/orders/:id', orders.getById);

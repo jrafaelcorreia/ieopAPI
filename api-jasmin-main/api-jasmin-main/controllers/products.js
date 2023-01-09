@@ -23,6 +23,51 @@ exports.get = async (req, res) => {
     }
 }
 
+exports.stock = async (req, res) => {
+    try {
+        
+        const token =  await this.connect1();
+        const url = "https://my.jasminsoftware.com/api/292267/292267-0001/materialscores/materialsitems";
+
+
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        };
+
+        const product = await axios.get(url, config);
+
+
+        return res.send(product.data);
+    }
+    catch (e) {
+        res.send(e);
+    }
+}
+
+exports.getStock = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const token =  await this.connect1();
+        const url = `https://my.jasminsoftware.com/api/292559/292559-0001/salesCore/salesItems/${id}`;
+
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        };
+
+        const product = await axios.get(url, config);
+        return res.send(product.data["priceListLines"]);
+    }
+    catch (err) {
+        res.send(err);
+        return;
+    }
+}
+
+
 exports.getById = async (req, res) => {
     try {
         const id = req.params.id;
